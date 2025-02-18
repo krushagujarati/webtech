@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Feedback Form</title>
+    <link rel="stylesheet" href="form.css">
+    <script>
+        function validateForm() {
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+            let emailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+            let passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+            let emailError = document.getElementById("email-error");
+            let passwordError = document.getElementById("password-error");
+            
+            emailError.textContent = "";
+            passwordError.textContent = "";
+            
+            if (!emailPattern.test(email)) {
+                emailError.textContent = "Email must be in the format example@gmail.com";
+                return false;
+            }
+            
+            if (!passwordPattern.test(password)) {
+                passwordError.textContent = "Password must be at least 8 characters long, contain one uppercase letter, one number, and one special character.";
+                return false;
+            }
+            
+            return true;
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            let emailInput = document.getElementById("email");
+            let passwordInput = document.getElementById("password");
+            let emailError = document.getElementById("email-error");
+            let passwordError = document.getElementById("password-error");
+            let emailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+            let passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+
+            emailInput.addEventListener("input", function() {
+                if (!emailPattern.test(emailInput.value)) {
+                    emailError.textContent = "Email must be in the format example@gmail.com";
+                } else {
+                    emailError.textContent = "";
+                }
+            });
+
+            passwordInput.addEventListener("input", function() {
+                if (!passwordPattern.test(passwordInput.value)) {
+                    passwordError.textContent = "Password must be at least 8 characters long, contain one uppercase letter, one number, and one special character.";
+                } else {
+                    passwordError.textContent = "";
+                }
+            });
+
+            // Add event listener to "Next" button to store email and password
+            let nextButton = document.querySelector(".next-btn");
+            nextButton.addEventListener("click", function() {
+                // Ensure the form is valid before saving to local storage
+                if (validateForm()) {
+                    let email = document.getElementById("email").value;
+                    let password = document.getElementById("password").value;
+                    localStorage.setItem("email", email);
+                    localStorage.setItem("password", password);
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="info-box">
+        <h2>We'd love to hear from you!</h2>
+        <p>Contact us using the form below and we’ll get back to you right away.</p><br>
+        <div class="course-details">
+            <h3>Pandit Deendayal Energy University</h3>
+            <h3>Department of ICT</h3>
+            <h3>Subject: Web Technology | Semester: 6</h3>
+            <h3>Subject Code: 23IC301P | Academic Year: 2024-25</h3>
+        </div>
+    </div>
+
+    <form class="container">
+        <input type="radio" id="step1" name="step" checked>
+        <input type="radio" id="step2" name="step">
+        
+        <div class="form-step step-1">
+            <h1>Student Information</h1>
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="Enter your name" required>
+            
+            <label for="batch">Batch</label>
+            <input type="text" id="batch" placeholder="Type your batch" required>
+            
+            <label for="rollno">Roll Number</label>
+            <input type="text" id="rollno" placeholder="Enter your Roll Number" required>
+            
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+            <div id="email-error" class="error-message"></div>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Enter your Password" required>
+            <div id="password-error" class="error-message"></div>
+            <br>
+            
+            <label for="step2" class="next-btn">Next</label>
+        </div>
+
+        <div class="form-step step-2">
+            <h1>Course Feedback Form</h1><br>
+            
+            <label>1. How do you rate the course content?</label>
+            <div class="options">
+                <button type="button">Excellent</button>
+                <button type="button">Good</button>
+                <button type="button">Average</button>
+                <button type="button">Poor</button>
+            </div>
+            <br>
+
+            <label>2. How effective were the teaching methods?</label>
+            <div class="options">
+                <button type="button">Very Effective</button>
+                <button type="button">Moderately Effective</button>
+                <button type="button">Needs Improvement</button>
+            </div>
+            <br>
+
+            <label>3. How engaging was the course material?</label>
+            <div class="options">
+                <button type="button">Very Engaging</button>
+                <button type="button">Somewhat Engaging</button>
+                <button type="button">Not Engaging</button>
+            </div><br>
+
+            <label>4. Were the practical assignments useful?</label>
+            <div class="options">
+                <button type="button">Yes</button>
+                <button type="button">No</button>
+            </div><br>
+
+            <label>5. Any suggestions for improvement?</label>
+            <textarea id="suggestions" placeholder="Enter your suggestions..."></textarea><br>
+
+            <button type="submit">Submit Feedback</button>
+        </div>
+    </form><br><br>
+</body>
+</html>
